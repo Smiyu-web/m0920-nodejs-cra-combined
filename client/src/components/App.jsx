@@ -2,13 +2,20 @@ import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import * as actions from '../actions'
+
 import Header from './Header'
 import PrivateRoute from './PrivateRoute';
 
 const Landing = () => (<h1>Landing Page</h1>)
 const Dashboard = () => (<h1>Dashboard Page</h1>)
 
-const App = () => {
+const App = ({ fetchUser }) => {
+
+    useEffect(() => {
+        fetchUser()
+    }, [fetchUser])
+
   return (
     <div>
         <Header />
@@ -19,4 +26,4 @@ const App = () => {
     </div>)
 }
 
-export default App
+export default connect(null, actions)(App)

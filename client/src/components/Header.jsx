@@ -2,14 +2,17 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-const Header = () => {
+const Header = ({ auth }) => {
     const [userState, setUserState] = useState(null)
 
+    useEffect(() => {
+        setUserState(auth)
+    }, [auth])
 
     return (
         <nav>
             <div className="nav-wrapper">
-                <Link to="/" className="left brand-logo">
+                <Link to={userState ? "/surveys" : "/"} className="left brand-logo">
                     Emeruly
                 </Link>
 
@@ -29,4 +32,8 @@ const Header = () => {
     )
 }
 
-export default Header
+const mapStateToProps = ({ auth: { user }}) => {
+    return { auth: user }
+}
+
+export default connect(mapStateToProps)(Header)
